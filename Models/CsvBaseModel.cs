@@ -1,40 +1,42 @@
+using SupermarketSpreadsheetReader.Static.Enum;
+
 namespace SupermarketSpreadsheetReader;
 
 public class CsvBaseModel
 {
-    public string Product_Name {get;set;}
+    public string Product_Name {get;set;}//ok
     
-    public string Catagory {get;set;}
+    public string Catagory {get;set;}//ok
     
-    public string Supplier_Name {get;set;}
+    public string Supplier_Name {get;set;}//ok
     
-    public string Warehouse_Location {get;set;}
+    public string Warehouse_Location {get;set;}//ok
     
-    public string Status {get;set;}
+    public StatusCsv Status {get;set;} //ok
     
-    public string Product_ID {get;set;}
+    public int Product_ID {get;set;}//ok
     
-    public string Supplier_ID {get;set;}
+    public int Supplier_ID {get;set;}//ok
     
-    public string Date_Received {get;set;}
+    public DateTime Date_Received {get;set;}//ok
     
-    public string Last_Order_Date {get;set;}
+    public DateTime Last_Order_Date {get;set;}//ok
     
-    public string Expiration_Date {get;set;}
+    public DateTime Expiration_Date {get;set;}//ok
     
-    public int Stock_Quantity {get;set;}
+    public int Stock_Quantity {get;set;}//ok
     
-    public int Reorder_Level {get;set;}
+    public int Reorder_Level {get;set;}//ok
     
-    public int Reorder_Quantity {get;set;}
+    public int Reorder_Quantity {get;set;}//ok
     
-    public string  Unit_Price {get;set;}
+    public double  Unit_Price {get;set;}//ok
     
-    public int  Sales_Volume {get;set;}
+    public int  Sales_Volume {get;set;}//ok
     
     public int  Inventory_Turnover_Rate {get;set;}
     
-    public string  percentage {get;set;}
+    public double  percentage {get;set;}
     
     
     
