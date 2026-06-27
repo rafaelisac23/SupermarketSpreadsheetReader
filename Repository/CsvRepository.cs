@@ -6,11 +6,13 @@ namespace SupermarketSpreadsheetReader.Static.Repository;
 public class CsvRepository
 {
     public string _path;
-    private List<CsvBaseModel> data = [];
+    public List<CsvBaseModel> data { get; private set; } = [];
+    private Menu _menu;
 
-    public CsvRepository(string path)
+    public CsvRepository(string path,Menu menu)
     {
         _path = path;
+        _menu = menu;
     }
 
     public void InitReadCsv()
@@ -18,12 +20,12 @@ public class CsvRepository
         //Verifica se o arquivo existe
 
         if (File.Exists(_path))
-        {
-           Menu.ShowFileExist();
+        { 
+            _menu.ShowFileExist();
         }
         else
         {
-           Menu.ShowFileDontExist();
+           _menu.ShowFileDontExist();
         }
         
         Console.Clear();

@@ -6,13 +6,13 @@ class Program
 {
     static void Main(string[] args)
     {
-        Menu.SetArchiveMenu();
-        string path = Console.ReadLine();
-        var csvRepository = new CsvRepository(path);
-        csvRepository.InitReadCsv();
-        
-        Menu.ShowMainMenu();
-        
+       Menu menu = new Menu();
+       string path = menu.SetArchiveMenu();
+       var csvRepository = new CsvRepository(path,menu);
+       csvRepository.InitReadCsv();
+       menu.Data = csvRepository.data;
+       menu.ShowMainMenu();
+       
     }
 
 
