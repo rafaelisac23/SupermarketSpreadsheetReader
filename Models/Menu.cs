@@ -17,8 +17,8 @@ public class Menu
     {
         Console.Clear();
 
-        int width = Console.WindowWidth;
-        int height = 43;
+        int width = 80;
+        int height = 23;
 
         string horizontal = new string('═', width - 2);
         
@@ -35,7 +35,7 @@ public class Menu
     {
         Console.Clear();
         ShowMenuBorders();
-        Console.SetCursorPosition(80,2);
+        Console.SetCursorPosition(20,2);
         Console.Write("Welcome to Supermarket Spreadsheet Reader ");
         Console.SetCursorPosition(5,10);
         Console.Write("Path of CSV: ");
@@ -79,15 +79,18 @@ public class Menu
     {
         try
         {
-            Console.SetCursorPosition(80, 2);
+            Console.SetCursorPosition(23, 2);
             Console.Write("Welcome to Supermarket Spreadsheet Reader");
 
-            Console.SetCursorPosition(80, 10);
+            Console.SetCursorPosition(25, 6);
             Console.WriteLine("1 - Show All Products");
-            Console.SetCursorPosition(80, 12);
-            Console.WriteLine("2 - Exit Application");
+            Console.SetCursorPosition(25, 8);
+            Console.WriteLine("2 - Search By Name");
+            Console.SetCursorPosition(25, 10);
+            Console.WriteLine("0 - Exit Application");
+            
 
-            Console.SetCursorPosition(80, 15);
+            Console.SetCursorPosition(25, 12);
             Console.Write("Select you option:");
             int option = int.Parse(Console.ReadLine());
 
@@ -97,6 +100,9 @@ public class Menu
                     showAllProductsMenu();
                     break;
                 case 2:
+                    SearchByName();
+                    break;
+                case 0:
                     Console.Clear();
                     Environment.Exit(0);
                     break;
@@ -114,11 +120,13 @@ public class Menu
         }
     }
     
+    
+    //ShowAllProducts
     public void showAllProductsMenu()
     {
         Console.Clear();
         ShowMenuBorders();
-        Console.SetCursorPosition(80,2);
+        Console.SetCursorPosition(25,2);
         Console.WriteLine("1 - Show All Products");
 
         int skip = 0;
@@ -137,6 +145,8 @@ public class Menu
         
         SetPaginationAllProducts(products, skip, take);
 
+        Console.SetCursorPosition(15, 4+15);
+        Console.WriteLine($"Next: F7  --  Previous: F6  -- Exit Menu: ESC");
 
         while (true)
         {
@@ -144,7 +154,6 @@ public class Menu
             
             switch (key.Key)
             {
-                
                 
                 case ConsoleKey.F7:
 
@@ -170,7 +179,7 @@ public class Menu
             }
         }
         
-     
+        
     }
 
     public void SetPaginationAllProducts(List<CsvBaseModel> products,int skip,int take)
@@ -179,10 +188,75 @@ public class Menu
         
         for (int i = 0; i < pagination.Count; i++)
         {
-            Console.SetCursorPosition(10, 4+i);
+            Console.SetCursorPosition(25, 4+i);
             Console.WriteLine($"{i+1} - {pagination[i].Product_Name }");
         }
     }
+    
+    
+    //SearchByName
+    public void SearchByName()
+    {
+        Console.Clear();
+        ShowMenuBorders();
+        Console.SetCursorPosition(25,2);
+        Console.WriteLine("2 - Search By Name");
+        
+        
+        Console.SetCursorPosition(15, 10);
+        Console.Write($"Enter the Product Name:");
+        string name = Console.ReadLine();
+        
+        
+        var product = _data.Where(x =>  x.Product_Name.ToLower() == name.ToLower()).ToList();
+        
+        Console.Clear();
+        ShowMenuBorders();
+        Console.SetCursorPosition(25,2);
+        Console.WriteLine("2 - Search By Name");
+
+        Console.SetCursorPosition(25,4);      
+        Console.WriteLine($"--Nome - ID - Fornecedor--");
+
+
+        if (product.Any())
+        {
+            
+            for (int i = 0; i < product.Count; i++)
+            {
+                Console.SetCursorPosition(15, 6+i);
+                Console.WriteLine($"{i+1} - {product[i].Product_Name} - {product[i].Product_ID} - {product[i].Supplier_Name}");
+            }
+
+            Console.SetCursorPosition(25,21);      
+            Console.WriteLine($"Press ESC to return");
+            
+        }
+        else
+        {
+            Console.SetCursorPosition(15, 7);
+            Console.WriteLine("Don't Have any Products");
+            Console.SetCursorPosition(25,21);      
+            Console.WriteLine($"Press ESC to return");
+        }
+        
+        
+        
+        while (true)
+        {
+            var key = Console.ReadKey(intercept:true);
+
+            switch (key.Key)
+            {
+                case ConsoleKey.Escape:
+                    Console.Clear();
+                    ShowMainMenu();
+                    break;
+            }
+        }
+    }
+    
+    
   
     
 }
