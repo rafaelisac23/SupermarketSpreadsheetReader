@@ -84,13 +84,15 @@ public class Menu
 
             Console.SetCursorPosition(25, 6);
             Console.WriteLine("1 - Show All Products");
-            Console.SetCursorPosition(25, 8);
+            Console.SetCursorPosition(25, 7);
             Console.WriteLine("2 - Search By Name");
-            Console.SetCursorPosition(25, 10);
+            Console.SetCursorPosition(25, 8);
+            Console.WriteLine("3 - Show Product: ");
+            Console.SetCursorPosition(25, 12);
             Console.WriteLine("0 - Exit Application");
             
 
-            Console.SetCursorPosition(25, 12);
+            Console.SetCursorPosition(25, 13);
             Console.Write("Select you option:");
             int option = int.Parse(Console.ReadLine());
 
@@ -119,15 +121,21 @@ public class Menu
            ShowMainMenu();
         }
     }
+
+    public void setBaseMenuOptions(string title)
+    {
+        Console.Clear();
+        ShowMenuBorders();
+        Console.SetCursorPosition(25,2);
+        Console.WriteLine(title);
+    }
     
     
     //ShowAllProducts
     public void showAllProductsMenu()
     {
-        Console.Clear();
-        ShowMenuBorders();
-        Console.SetCursorPosition(25,2);
-        Console.WriteLine("1 - Show All Products");
+       
+        setBaseMenuOptions("1 - Show All Products");
 
         int skip = 0;
         int take = 11;
@@ -136,6 +144,7 @@ public class Menu
 
         foreach (var data in _data)
         {
+            
 
             if (!products.Exists(x => x.Product_Name == data.Product_Name))
             {
@@ -157,9 +166,13 @@ public class Menu
                 
                 case ConsoleKey.F7:
 
-                    if(skip < products.Count) skip += 11;
+                    if(skip < products.Count-11) skip += 11;
+                    
                     
                     SetPaginationAllProducts(products, skip, take);
+                    
+                    Console.SetCursorPosition(15, 4+15);
+                    Console.WriteLine($"Next: F7  --  Previous: F6  -- Exit Menu: ESC");
                     
                     break;
                 
@@ -168,6 +181,9 @@ public class Menu
                     if(skip > 0 && skip <= products.Count) skip -= 11;
 
                     SetPaginationAllProducts(products, skip, take);
+                    
+                    Console.SetCursorPosition(15, 4+15);
+                    Console.WriteLine($"Next: F7  --  Previous: F6  -- Exit Menu: ESC");
                     
                     break;
                 
@@ -184,6 +200,8 @@ public class Menu
 
     public void SetPaginationAllProducts(List<CsvBaseModel> products,int skip,int take)
     {
+        setBaseMenuOptions("1 - Show All Products");
+        
         var pagination = products.Skip(skip).Take(take).ToList();
         
         for (int i = 0; i < pagination.Count; i++)
@@ -191,16 +209,15 @@ public class Menu
             Console.SetCursorPosition(25, 4+i);
             Console.WriteLine($"{i+1} - {pagination[i].Product_Name }");
         }
+        
     }
     
     
     //SearchByName
     public void SearchByName()
     {
-        Console.Clear();
-        ShowMenuBorders();
-        Console.SetCursorPosition(25,2);
-        Console.WriteLine("2 - Search By Name");
+        
+       setBaseMenuOptions("2 - Search By Name");
         
         
         Console.SetCursorPosition(15, 10);
@@ -210,10 +227,7 @@ public class Menu
         
         var product = _data.Where(x =>  x.Product_Name.ToLower() == name.ToLower()).ToList();
         
-        Console.Clear();
-        ShowMenuBorders();
-        Console.SetCursorPosition(25,2);
-        Console.WriteLine("2 - Search By Name");
+        setBaseMenuOptions("2 - Search By Name");
 
         Console.SetCursorPosition(25,4);      
         Console.WriteLine($"--Nome - ID - Fornecedor--");
