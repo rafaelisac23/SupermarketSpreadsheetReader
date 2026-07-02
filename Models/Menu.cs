@@ -1,3 +1,4 @@
+using System.Globalization;
 using SupermarketSpreadsheetReader.Static.Repository;
 
 namespace SupermarketSpreadsheetReader;
@@ -87,7 +88,7 @@ public class Menu
             Console.SetCursorPosition(25, 7);
             Console.WriteLine("2 - Search By Name");
             Console.SetCursorPosition(25, 8);
-            Console.WriteLine("3 - Show Product: ");
+            Console.WriteLine("3 - Show Product by Id: ");
             Console.SetCursorPosition(25, 12);
             Console.WriteLine("0 - Exit Application");
             
@@ -103,6 +104,9 @@ public class Menu
                     break;
                 case 2:
                     SearchByName();
+                    break;
+                case 3:
+                    ShowProductById();
                     break;
                 case 0:
                     Console.Clear();
@@ -194,8 +198,6 @@ public class Menu
                 
             }
         }
-        
-        
     }
 
     public void SetPaginationAllProducts(List<CsvBaseModel> products,int skip,int take)
@@ -211,7 +213,6 @@ public class Menu
         }
         
     }
-    
     
     //SearchByName
     public void SearchByName()
@@ -270,6 +271,88 @@ public class Menu
         }
     }
     
+    //Show Product by ID
+    public void ShowProductById()
+    {
+
+        while (true)
+        {
+            
+        
+            setBaseMenuOptions("3 - Show Product By ID");
+    
+            Console.SetCursorPosition(15, 10);
+            Console.Write($"Enter the Product ID:");
+            int id = int.Parse(Console.ReadLine());
+            
+            var product = _data.FirstOrDefault(x => x.Product_ID == id);
+
+            if (product == null)
+            {
+                Console.SetCursorPosition(15, 7);
+                Console.WriteLine("Don't Have any Products");
+                Console.SetCursorPosition(25,21);      
+                Console.WriteLine($"Press ESC to return");
+            }
+            else
+            {
+                Console.Clear();
+                setBaseMenuOptions("3 - Show Product By ID");
+                Console.SetCursorPosition(5, 7);
+                Console.WriteLine("Name: " + product.Product_Name);
+                Console.SetCursorPosition(5, 8);
+                Console.WriteLine("Category: " + product.Catagory);
+                Console.SetCursorPosition(5, 9);
+                Console.WriteLine("Supplier Name: " + product.Supplier_Name);
+                Console.SetCursorPosition(5, 10);
+                Console.WriteLine("Warehouse: " + product.Warehouse_Location);
+                Console.SetCursorPosition(5, 11);
+                Console.WriteLine("Status: " + product.Status);
+                Console.SetCursorPosition(5, 12);
+                Console.WriteLine("ID: " + product.Product_ID);
+                Console.SetCursorPosition(5, 13);
+                Console.WriteLine("Supplier ID: " + product.Supplier_ID);
+                Console.SetCursorPosition(5, 14);
+                Console.WriteLine("Data Received: " + product.Date_Received.ToShortDateString());
+                Console.SetCursorPosition(42, 7);
+                Console.WriteLine("Last Order : " + product.Last_Order_Date.ToShortDateString());
+                Console.SetCursorPosition(42, 8);
+                Console.WriteLine("Expiration Date : " + product.Expiration_Date.ToShortDateString());
+                Console.SetCursorPosition(42, 9);
+                Console.WriteLine("Stock Quantity : " + product.Stock_Quantity);
+                Console.SetCursorPosition(42, 10);
+                Console.WriteLine("Reorder Level : " + product.Reorder_Level);
+                Console.SetCursorPosition(42, 11);
+                Console.WriteLine("Unit Price : " + product.Unit_Price.ToString("F2",CultureInfo.InvariantCulture));
+                Console.SetCursorPosition(42, 12);
+                Console.WriteLine("Sales Volume : " + product.Sales_Volume);
+                Console.SetCursorPosition(42, 13);
+                Console.WriteLine("Inventory Turnover : " + product.Inventory_Turnover_Rate);
+                Console.SetCursorPosition(42, 14);
+                Console.WriteLine("Percentage : " + product.percentage+"%");
+                
+                
+                
+            }
+            
+            Console.SetCursorPosition(25,21);      
+            Console.WriteLine($"Press ESC to return");
+
+            var key = Console.ReadKey(intercept: true);
+
+            switch (key.Key)
+            {
+                case ConsoleKey.Escape:
+                    Console.Clear();
+                    
+                    break;
+            }
+            
+            
+        }
+            
+            
+    }
     
   
     
